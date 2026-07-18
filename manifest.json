@@ -1,16 +1,16 @@
 {
-  "short_name": "CongoCalcul",
-  "name": "Calculateur Congo Airtel MTN",
+  "name": "FRAIS-CG",
+  "short_name": "FRAIS-CG",
   "icons": [
     {
       "src": "icon.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "./index.html",
-  "background_color": "#020617",
-  "theme_color": "#22c55e",
   "display": "standalone",
-  "orientation": "portrait"
+  "background_color": "#020617",
+  "theme_color": "#22c55e"
 }
