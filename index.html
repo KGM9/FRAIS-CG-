@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congo Frais Mobile & Calculatrice</title>
+    <link rel="manifest" href="manifest.json">
+    <!-- Optimisations et sécurité pour l'affichage mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#020617">
+    <!-- Tailwind CSS pour s'adapter à tous les écrans (PC, Android, iOS) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans antialiased">
+
+    <!-- En-tête avec le drapeau du Congo 🇨🇬 -->
+    <header class="py-4 text-center border-b border-slate-900 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="flex items-center justify-center gap-2">
+            <span class="text-2xl">🇨🇬</span>
+            <h1 class="text-2xl font-black tracking-wider bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 bg-clip-text text-transparent uppercase">
+                Congo Multi-Calcul
+            </h1>
+        </div>
+        <p class="text-slate-400 text-[10px] tracking-widest uppercase mt-0.5">Airtel Money • MTN MoMo</p>
+    </header>
+
+    <!-- Navigation Onglets -->
+    <nav class="flex justify-center gap-3 px-4 mt-6 max-w-md mx-auto w-full">
+        <button id="tab-frais" class="flex-1 py-3 rounded-2xl font-bold text-sm bg-gradient-to-r from-green-500 to-yellow-500 text-slate-950 shadow-lg transition-all duration-200 active:scale-95">
+            📊 Frais Congo (3.5%)
+        </button>
+        <button id="tab-calc" class="flex-1 py-3 rounded-2xl font-bold text-sm bg-slate-900 border border-slate-800 text-slate-400 transition-all duration-200 active:scale-95">
+            🧮 Calculatrice
+        </button>
+    </nav>
+
+    <!-- Contenu de l'application -->
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-4 max-w-md mx-auto w-full">
+        
+        <!-- SECTION 1 : CALCUL DES FRAIS PAR RÉSEAU -->
+        <div id="section-frais" class="w-full space-y-6">
+            <!-- Saisie du montant -->
+            <div class="bg-slate-900/40 border border-slate-900 rounded-3xl p-5 shadow-xl">
+                <label for="amount-input" class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Montant de la transaction (FCFA)</label>
+                <input type="number" id="amount-input" inputmode="numeric" min="1" placeholder="Entrez le montant..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-2xl font-bold text-emerald-400 focus:outline-none focus:border-green-500 transition-all">
+            </div>
+
+            <!-- BLOC MTN (Jaune) -->
+            <div class="bg-slate-900/40 border border-yellow-500/20 rounded-3xl p-5 shadow-xl space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center overflow-hidden border border-yellow-300">
+                        <img src="MTN2.jpg" alt="MTN" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-black text-yellow-400 uppercase tracking-wide">MTN Mobile Money</h2>
+                        <p class="text-[10px] text-slate-500 uppercase">Tarif Réseau Congo</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-900 flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-medium">🔴 Retrait (Le client reçoit)</span>
+                        <div class="text-right">
+                            <span id="mtn-net-retrait" class="font-bold text-yellow-400 block text-base">0 FCFA</span>
+                            <span id="mtn-frais-retrait" class="text-[10px] text-slate-500 block">Frais: 0 F</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-900 flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-medium">🟢 Dépôt (Client doit donner)</span>
+                        <div class="text-right">
+                            <span id="mtn-total-depot" class="font-bold text-green-400 block text-base">0 FCFA</span>
+                            <span id="mtn-frais-depot" class="text-[10px] text-slate-500 block">Frais: +0 F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOC AIRTEL (Rouge) -->
+            <div class="bg-slate-900/40 border border-red-500/20 rounded-3xl p-5 shadow-xl space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center overflow-hidden border border-red-500">
+                        <img src="AIRTEL2.jpg" alt="Airtel" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-black text-red-500 uppercase tracking-wide">Airtel Money</h2>
+                        <p class="text-[10px] text-slate-500 uppercase">Tarif Réseau Congo</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-900 flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-medium">🔴 Retrait (Le client reçoit)</span>
+                        <div class="text-right">
+                            <span id="airtel-net-retrait" class="font-bold text-red-400 block text-base">0 FCFA</span>
+                            <span id="airtel-frais-retrait" class="text-[10px] text-slate-500 block">Frais: 0 F</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-900 flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-medium">🟢 Dépôt (Client doit donner)</span>
+                        <div class="text-right">
+                            <span id="airtel-total-depot" class="font-bold text-green-400 block text-base">0 FCFA</span>
+                            <span id="airtel-frais-depot" class="text-[10px] text-slate-500 block">Frais: +0 F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2 : CALCULATRICE SÉCURISÉE -->
+        <div id="section-calc" class="w-full bg-slate-900/40 border border-slate-900 rounded-3xl p-5 hidden shadow-xl">
+            <div id="calc-screen" class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-right text-3xl font-mono font-bold tracking-wide text-cyan-400 h-16 overflow-x-auto mb-4">0</div>
+            
+            <div class="grid grid-cols-4 gap-3">
+                <button class="calc-btn col-span-2 bg-red-950/30 border border-red-900/40 text-red-400 rounded-xl p-4 font-bold" data-val="C">C</button>
+                <button class="calc-btn bg-slate-800 text-slate-200 rounded-xl p-4 font-bold" data-val="/">/</button>
+                <button class="calc-btn bg-slate-800 text-slate-200 rounded-xl p-4 font-bold" data-val="*">*</button>
+
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="7">7</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="8">8</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="9">9</button>
+                <button class="calc-btn bg-slate-800 text-slate-200 rounded-xl p-4 font-bold" data-val="-">-</button>
+
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="4">4</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="5">5</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="6">6</button>
+                <button class="calc-btn bg-slate-800 text-slate-200 rounded-xl p-4 font-bold" data-val="+">+</button>
+
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="1">1</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="2">2</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="3">3</button>
+                <button class="calc-btn col-span-1 row-span-2 bg-gradient-to-b from-green-400 to-emerald-600 text-slate-950 rounded-xl p-4 font-black text-xl flex items-center justify-center" data-val="=">=</button>
+
+                <button class="calc-btn col-span-2 bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val="0">0</button>
+                <button class="calc-btn bg-slate-950 border border-slate-900 text-white rounded-xl p-4 font-bold" data-val=".">.</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 💰 ZONE DE PUBLICITÉ BANNIÈRE ADMOB (Activable par connexion) -->
+    <div id="ad-container" class="ad-banner">
+        <!-- Géré dynamiquement par JavaScript -->
+    </div>
+
+    <!-- Pied de page corrigé (sans mention hors-ligne) -->
+    <footer class="py-3 text-center border-t border-slate-900 text-[9px] text-slate-600 tracking-widest uppercase">
+        République du Congo • Service Connecté 🛡️
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
