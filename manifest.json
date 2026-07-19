@@ -1,6 +1,7 @@
 {
   "name": "FRAIS-CG",
   "short_name": "FRAIS-CG",
+  "description": "Calculateur de frais de transaction Mobile Money pour MTN et Airtel au Congo.",
   "icons": [
     {
       "src": "icon.png",
